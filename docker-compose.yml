@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # Nginx service
+  nginx:
+    image: jubayer254/express-app:latest 
+    container_name: nginx-server
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - express-app
+    networks:
+      - app-network
+
+  # Express.js application service
+  express-app:
+    build: .
+    container_name: express-app
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

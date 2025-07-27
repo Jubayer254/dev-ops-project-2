@@ -1,20 +1,18 @@
-# Use official Node.js runtime as base image
-FROM node:22-alpine
+# Use Node.js official image
+FROM node:20.11.1-alpine
 
-# Set working directory in container
-WORKDIR /app
+# Set working directory inside container
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json (if available)
+# Copy package files and install dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the rest of application code
+# Copy all source code
 COPY . .
 
-# Expose port 5000 (the actual port your Express app uses)
-EXPOSE 5000
+# Expose port 3000 (Express default port)
+EXPOSE 3000
 
-# Command to run the application
+# Start the app
 CMD ["npm", "start"]
